@@ -1,0 +1,19 @@
+ActivityOne:
+onCreate
+onStart
+onResume
+onPause
+onStop
+
+Start ActivityTwo
+
+ActivityTwo:
+onCreate
+onStart
+onResume
+
+Close ActivityTwo
+
+ActivityOne:
+onStart
+onResume
