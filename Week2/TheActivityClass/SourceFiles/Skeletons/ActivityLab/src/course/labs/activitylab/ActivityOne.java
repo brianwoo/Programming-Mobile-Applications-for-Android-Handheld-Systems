@@ -30,10 +30,15 @@ public class ActivityOne extends Activity {
 
 	// You will need to increment these variables' values when their
 	// corresponding lifecycle methods get called.
+	
+	int mCreate, mRestart, mStart, mResume = 0;
+	
+	
 
 	// TODO: Create variables for each of the TextViews
 	// named mTvCreate, mTvRestart, mTvStart, mTvResume.
 	// for displaying the current count of each counter variable
+	TextView mTvCreate, mTvRestart, mTvStart, mTvResume;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,10 @@ public class ActivityOne extends Activity {
 		// TODO: Assign the appropriate TextViews to the TextView variables
 		// Hint: Access the TextView by calling Activity's findViewById()
 		// textView1 = (TextView) findViewById(R.id.textView1);
+		mTvCreate = (TextView) findViewById(R.id.create);
+		mTvRestart = (TextView) findViewById(R.id.restart);
+		mTvStart = (TextView) findViewById(R.id.start);
+		mTvResume = (TextView) findViewById(R.id.resume);
 
 		Button launchActivityTwoButton = (Button) findViewById(R.id.bLaunchActivityTwo);
 		launchActivityTwoButton.setOnClickListener(new OnClickListener() {
@@ -55,9 +64,10 @@ public class ActivityOne extends Activity {
 
 				// Create an intent stating which Activity you would like to
 				// start
-				Intent intent = null;
+				Intent intent = new Intent(v.getContext(), ActivityTwo.class);
 
 				// Launch the Activity using the intent
+				startActivity(intent);
 
 			}
 		});
@@ -76,7 +86,9 @@ public class ActivityOne extends Activity {
 
 		// TODO:
 		// Update the appropriate count variable
+		mCreate++;
 		// Update the user interface via the displayCounts() method
+		displayCounts();
 
 	}
 
@@ -91,7 +103,9 @@ public class ActivityOne extends Activity {
 
 		// TODO:
 		// Update the appropriate count variable
+		mStart++;
 		// Update the user interface
+		displayCounts();
 
 	}
 
@@ -104,7 +118,9 @@ public class ActivityOne extends Activity {
 
 		// TODO:
 		// Update the appropriate count variable
+		mResume++;
 		// Update the user interface
+		displayCounts();
 
 	}
 
@@ -133,7 +149,9 @@ public class ActivityOne extends Activity {
 
 		// TODO:
 		// Update the appropriate count variable
+		mRestart++;
 		// Update the user interface
+		displayCounts();
 
 	}
 

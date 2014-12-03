@@ -29,13 +29,14 @@ public class ActivityTwo extends Activity {
 	
 	// You will need to increment these variables' values when their
 	// corresponding lifecycle methods get called.
-	
+	int mCreate, mRestart, mStart, mResume = 0; 
 
 	
 	
 	// TODO: Create variables for each of the TextViews
 	// named  mTvCreate, mTvRestart, mTvStart, mTvResume.
 	// for displaying the current count of each counter variable
+	TextView mTvCreate, mTvRestart, mTvStart, mTvResume;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,11 @@ public class ActivityTwo extends Activity {
 		// TODO: Assign the appropriate TextViews to the TextView variables
 		// Hint: Access the TextView by calling Activity's findViewById()
 		// textView1 = (TextView) findViewById(R.id.textView1);
+		mTvCreate = (TextView) findViewById(R.id.create);
+		mTvRestart = (TextView) findViewById(R.id.restart);
+		mTvStart = (TextView) findViewById(R.id.start);
+		mTvResume = (TextView) findViewById(R.id.resume);
 
-
-		
 		
 		
 		
@@ -60,7 +63,9 @@ public class ActivityTwo extends Activity {
 				// TODO:
 				// This function closes Activity Two
 				// Hint: use Context's finish() method
-
+				((Activity) v.getContext()).finish(); 
+				
+				
 				
 			
 			}
@@ -85,8 +90,9 @@ public class ActivityTwo extends Activity {
 
 		// TODO:
 		// Update the appropriate count variable
+		mCreate++;
 		// Update the user interface via the displayCounts() method
-
+		displayCounts();
 
 		
 		
@@ -103,8 +109,9 @@ public class ActivityTwo extends Activity {
 
 		// TODO:
 		// Update the appropriate count variable
+		mStart++;
 		// Update the user interface
-
+		displayCounts();
 
 		
 		
@@ -119,8 +126,9 @@ public class ActivityTwo extends Activity {
 
 		// TODO:
 		// Update the appropriate count variable
+		mResume++;
 		// Update the user interface
-
+		displayCounts();
 
 	
 	}
@@ -150,8 +158,9 @@ public class ActivityTwo extends Activity {
 
 		// TODO:
 		// Update the appropriate count variable
+		mRestart++;
 		// Update the user interface
-
+		displayCounts();
 
 	
 	

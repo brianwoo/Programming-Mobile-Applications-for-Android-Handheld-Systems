@@ -2,8 +2,6 @@ ActivityOne:
 onCreate
 onStart
 onResume
-onPause
-onStop
 
 Start ActivityTwo
 
@@ -14,6 +12,40 @@ onResume
 
 Close ActivityTwo
 
+ActivityTwo:
+onPause
+onStop
+onDestroy
+
 ActivityOne:
+onRestart
 onStart
 onResume
+
+
+Start ActivityTwo
+
+ActivityOne:
+onPause
+onStop
+
+ActivityTwo:
+onCreate
+onStart
+onResume
+
+Press Home Button
+ActivityTwo:
+onPause
+onStop
+
+Press application icon in the Launcher
+ActivityTwo:
+onRestart
+onStart
+onResume
+
+
+
+
+
