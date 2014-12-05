@@ -1,0 +1,29 @@
+onCreate() calls: 1
+onStart() calls: 1
+onResume() calls: 1
+onRestart() calls: 0
+
+onCreate() calls: 3
+onStart() calls: 3
+onResume() calls: 3
+onRestart() calls: 0
+
+onCreate() calls: 1
+onStart() calls: 1
+onResume() calls: 1
+onRestart() calls: 0
+
+onCreate() calls: 3
+onStart() calls: 3
+onResume() calls: 3
+onRestart() calls: 0
+
+onCreate() calls: 1
+onStart() calls: 2
+onResume() calls: 2
+onRestart() calls: 1
+
+onCreate() calls: 1
+onStart() calls: 1
+onResume() calls: 1
+onRestart() calls: 0
