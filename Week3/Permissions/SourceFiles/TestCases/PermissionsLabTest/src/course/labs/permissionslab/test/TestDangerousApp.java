@@ -34,6 +34,7 @@ public class TestDangerousApp extends ActivityInstrumentationTestCase2<ActivityL
 				"ActivityLoaderActivity did not load correctly.", 
 				solo.waitForActivity(course.labs.permissionslab.ActivityLoaderActivity.class));
 
+		/* */
 		// Click on Bookmarks Activity
 		solo.clickOnView(solo.getView(course.labs.permissionslab.R.id.start_bookmarks_button));
 
@@ -42,6 +43,7 @@ public class TestDangerousApp extends ActivityInstrumentationTestCase2<ActivityL
 				   "Section One:" +
 				   "BookmarksActivity did not load correctly", 
 				   solo.waitForActivity(course.labs.permissionslab.BookmarksActivity.class));
+		/**/
 		
 		// ===================== Section Two ===================
 		// Click on Go To DangerousActivity
