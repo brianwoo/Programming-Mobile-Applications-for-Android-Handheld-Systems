@@ -13,9 +13,11 @@ import java.text.ParseException;
 import java.util.Date;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +37,8 @@ public class ToDoManagerActivity extends ListActivity {
 	private static final int MENU_DUMP = Menu.FIRST + 1;
 
 	ToDoListAdapter mAdapter;
-
+	LayoutInflater mInflater;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,14 +50,15 @@ public class ToDoManagerActivity extends ListActivity {
 		getListView().setFooterDividersEnabled(true);
 
 		// TODO - Inflate footerView for footer_view.xml file
-
-		TextView footerView = null;
+		TextView footerView = (TextView) getLayoutInflater().inflate(R.layout.footer_view, null);
 
 		// NOTE: You can remove this block once you've implemented the assignment
 		if (null == footerView) {
 			return;
 		}
+		
 		// TODO - Add footerView to ListView
+		getListView().addFooterView(footerView);
 
 		
 		footerView.setOnClickListener(new OnClickListener() {
@@ -64,6 +68,7 @@ public class ToDoManagerActivity extends ListActivity {
 				Log.i(TAG,"Entered footerView.OnClickListener.onClick()");
 
 				//TODO - Implement OnClick().
+				//Intent toDoItemIntent = new Intent();
 			}
 		});
 
