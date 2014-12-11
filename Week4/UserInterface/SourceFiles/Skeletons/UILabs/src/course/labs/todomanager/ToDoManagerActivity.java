@@ -91,7 +91,8 @@ public class ToDoManagerActivity extends ListActivity {
 		{
 			if (RESULT_OK == resultCode)
 			{
-				//data
+				ToDoItem toDoItem = new ToDoItem(data);
+				mAdapter.add(toDoItem);
 			}
 		}
 		
