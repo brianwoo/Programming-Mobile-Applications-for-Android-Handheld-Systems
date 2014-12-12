@@ -27,8 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="#FF8167BD"
-                android:text="@string/hello_world" />
+                android:background="#FF8167BD" />
 
             <TextView
                 android:id="@+id/textview2"
@@ -36,8 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="#FFCE599C"
-                android:text="@string/hello_world" />
+                android:background="#FFCE599C" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,8 +51,7 @@
                 android:layout_gravity="left"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="#FFD12B4C"
-                android:text="@string/hello_world" />
+                android:background="#FFD12B4C" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -62,8 +59,7 @@
                 android:layout_gravity="left"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="#FFEEECED"
-                android:text="@string/hello_world" />
+                android:background="#FFEEECED" />
 
             <TextView
                 android:id="@+id/textview4"
@@ -72,8 +68,7 @@
                 android:layout_gravity="left"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
-                android:background="#FF3236AB"
-                android:text="@string/hello_world" />
+                android:background="#FF3236AB" />
         </LinearLayout>
     </LinearLayout>
 
@@ -85,7 +80,7 @@
             android:id="@+id/seekBar1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:max="50"/>
+            android:max="75"/>
     </LinearLayout>
 
 </LinearLayout>
