@@ -89,10 +89,12 @@ public class MainActivity extends Activity implements SelectionListener {
 			// Show a Toast Notification to inform user that 
 			// the app is "Downloading Tweets from Network"
 			Log.i (TAG,"Issuing Toast Message");
-
-
 			
-			
+			Toast.makeText(
+					getApplicationContext(), 
+					"Downloading Tweets from Network", 
+					Toast.LENGTH_SHORT).show();	
+
 
 			new DownloaderTask(this).execute(URL_TSWIFT, URL_RBLACK, URL_LGAGA);
 
@@ -109,10 +111,8 @@ public class MainActivity extends Activity implements SelectionListener {
 					// Check to make sure this is an ordered broadcast
 					// Let sender know that the Intent was received
 					// by setting result code to MainActivity.IS_ALIVE
-
-					
-
-
+					if (isOrderedBroadcast())
+						setResultCode(MainActivity.IS_ALIVE);
 					
 				}
 			};
@@ -186,11 +186,12 @@ public class MainActivity extends Activity implements SelectionListener {
 		// TODO:
 		// Register the BroadcastReceiver to receive a 
 		// DATA_REFRESHED_ACTION broadcast
-
-		
-		
-		
+		IntentFilter intentFilter = new IntentFilter(DATA_REFRESHED_ACTION);
+		intentFilter.setPriority(10);
+		registerReceiver(mRefreshReceiver, intentFilter);
 	}
+	
+	
 
 	@Override
 	protected void onPause() {
@@ -199,11 +200,9 @@ public class MainActivity extends Activity implements SelectionListener {
 		// Unregister the BroadcastReceiver if it has been registered
         // Note: To work around a Robotium issue - check that the BroadcastReceiver
         // is not null before you try to unregister it
-        
+		if (mRefreshReceiver != null)
+			unregisterReceiver(mRefreshReceiver);
 
-		
-		
-		
 		super.onPause();
 
 	}
