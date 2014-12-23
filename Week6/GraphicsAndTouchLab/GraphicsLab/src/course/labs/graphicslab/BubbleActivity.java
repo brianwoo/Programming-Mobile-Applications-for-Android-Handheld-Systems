@@ -85,19 +85,22 @@ public class BubbleActivity extends Activity {
 				/ mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
 		// TODO - make a new SoundPool, allowing up to 10 streams
-		mSoundPool = null;
+		mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 
 		// TODO - set a SoundPool OnLoadCompletedListener that calls
 		// setupGestureDetector()
-		
-		
-		
+		mSoundPool.setOnLoadCompleteListener(new OnLoadCompleteListener()
+		{
+			@Override
+			public void onLoadComplete(SoundPool soundPool, int sampleId, int status)
+			{
+				setupGestureDetector();
+			}
+		});
 		
 		
 		// TODO - load the sound from res/raw/bubble_pop.wav
-		
-		
-		
+		mSoundID = mSoundPool.load(this, R.raw.bubble_pop, 1);
 
 	}
 
@@ -129,7 +132,13 @@ public class BubbleActivity extends Activity {
 				// TODO - Implement onFling actions.
 				// You can get all Views in mFrame one at a time
 				// using the ViewGroup.getChildAt() method
-
+				int numChildren = mFrame.getChildCount();
+				
+				for (int i=0; i < numChildren; i++)
+				{
+					BubbleView childView = (BubbleView) mFrame.getChildAt(i);
+					childView.mDx = 0;
+				}
 
 				
 				
