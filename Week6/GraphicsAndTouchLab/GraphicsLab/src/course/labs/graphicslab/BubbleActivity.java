@@ -136,9 +136,13 @@ public class BubbleActivity extends Activity {
 				
 				for (int i=0; i < numChildren; i++)
 				{
-					//BubbleView childView = (BubbleView) mFrame.getChildAt(i);
-					//childView.mDx = velocityX;
-					//childView.mDy = velocityY;
+					BubbleView childView = (BubbleView) mFrame.getChildAt(i);
+					
+					if (childView.intersects(event1.getX(), event1.getY()))
+					{
+						childView.deflect(velocityX, velocityY);
+					}
+					
 				}
 
 				return true;
