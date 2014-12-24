@@ -293,20 +293,36 @@ public class BubbleActivity extends Activity {
 
 				// TODO - Set mDx and mDy to indicate movement direction and speed 
 				// Limit speed in the x and y direction to [-3..3] pixels per movement.
-				
-				// WHEN TO SET IT TO -3?
-				float speed = r.nextInt(3);
-				
-				if (speed == 0) 
-					speed = 1;
-				
-				mDx = speed;
-				mDy = speed;
+				float xSpeed = getRandomSpeed(r);
+				float ySpeed = getRandomSpeed(r);
+								
+				mDx = xSpeed;
+				mDy = ySpeed;
 
 					
 				
 			}
 		}
+		
+		/**
+		 * Get Random Speed [-3..3]
+		 * @param r
+		 * @return
+		 */
+		private float getRandomSpeed(Random r)
+		{
+			float speed = r.nextInt(3);
+			if (speed == 0) speed = 1;  // we want it to always move.
+			
+			boolean isPositive = r.nextBoolean();
+			if (!isPositive)
+				speed *= -1;
+			
+			return speed;
+		}
+		
+		
+		
 
 		private void createScaledBitmap(Random r) {
 
@@ -358,7 +374,9 @@ public class BubbleActivity extends Activity {
 					}
 					else
 					{
-						mMoverFuture.cancel(true);
+						//removeViewFromMainFrame();
+						//mMoverFuture.cancel(true);
+						stopMovement(false);
 					}
 								
 				}
@@ -377,17 +395,17 @@ public class BubbleActivity extends Activity {
 		private synchronized boolean intersects(float x, float y) {
 
 			// TODO - Return true if the BubbleView intersects position (x,y)
-			System.out.println("x=" + x + ", y=" + y);
-			System.out.print("X1=" + (mXPos - mRadius));
-			System.out.println(", X2=" + (mXPos + mRadius));
-			System.out.print("Y1=" + (mYPos - mRadius));
-			System.out.println(", Y2=" + (mYPos + mRadius));
+			//System.out.println("#### x=" + x + ", y=" + y);
+			//System.out.print("X1=" + (mXPos - 0));
+			//System.out.println(", X2=" + (mXPos + 0) + ", radius=" + mScaledBitmapWidth);
+			//System.out.print("Y1=" + (mYPos - 0));
+			//System.out.println(", Y2=" + (mYPos + 0) + ", radius=" + mScaledBitmapWidth);
 			
 			
-			if ((x >= mXPos - mRadius) && 
-					(x <=  mXPos + mRadius) && 
-					(y >= mYPos - mRadius) && 
-					(y <=  mYPos + mRadius))
+			if ((x >= mXPos - mScaledBitmapWidth) && 
+					(x <=  mXPos + mScaledBitmapWidth) && 
+					(y >= mYPos - mScaledBitmapWidth) && 
+					(y <=  mYPos + mScaledBitmapWidth))
 				return true;
 			
 			
