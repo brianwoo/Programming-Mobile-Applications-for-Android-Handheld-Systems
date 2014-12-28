@@ -64,6 +64,10 @@ public class PlaceRecord {
 	}
 	
 	boolean intersects(Location location) {
+		
+		System.out.println("## on list: lat=" + mLocation.getLatitude() + ", mlong=" + mLocation.getLongitude());
+		System.out.println("## lat=" + location.getLatitude() + ", long=" + location.getLongitude());
+		
 		double tolerance = 1000;
 		return (mLocation.distanceTo(location) <= tolerance);
 	}
