@@ -82,9 +82,13 @@ public class PlaceBadgeContentProvider extends ContentProvider {
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		qb.setTables(PlaceBadgesContract.BADGES_TABLE_NAME);
 
+		System.out.println("#### query 1");
+		
 		Cursor cursor = qb.query(mDbHelper.getWritableDatabase(), projection, selection,
 				selectionArgs, null, null, sortOrder);
 
+		System.out.println("#### query 2");
+		
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
 		return cursor;

@@ -55,6 +55,9 @@ public class PlaceDownloaderTask extends AsyncTask<Location, Void, PlaceRecord> 
 
 	public PlaceDownloaderTask(PlaceViewActivity parent, boolean hasNetwork) {
 		super();
+		
+		System.out.println("#### at Start PlaceDownloaderTask ctor");
+		
 
 		mParent = new WeakReference<PlaceViewActivity>(parent);
 		mHasNetwork = hasNetwork;
@@ -75,6 +78,8 @@ public class PlaceDownloaderTask extends AsyncTask<Location, Void, PlaceRecord> 
 			sMockLoc3.setLongitude(0);
 			sMockCountryNameInvalid = "";
 			sMockPlaceNameInvalid = "";
+			
+			System.out.println("#### finished PlaceDownloaderTask ctor");
 
 		}
 	}

@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -61,17 +63,17 @@ public class PlaceViewAdapter extends CursorAdapter {
 		// the current set of PlaceRecords. Use the
 		// getPlaceRecordFromCursor() method as you add the
 		// cursor's places to the list
+		mPlaceRecords.clear();
+		
+		newCursor.moveToFirst();
+		
+		if (newCursor.moveToNext())
+		{
+			PlaceRecord placeRecord = getPlaceRecordFromCursor(newCursor);
+			mPlaceRecords.add(placeRecord);
+		}
 
-
-        return null;
-        
-        
-        
-        
-        
-        
-        
-        
+        return newCursor;
         
 
 	}
@@ -119,7 +121,11 @@ public class PlaceViewAdapter extends CursorAdapter {
 	}
 
 	public boolean intersects(Location location) {
+		
 		for (PlaceRecord item : mPlaceRecords) {
+			
+			System.out.println("###Array: " + item.getLocation().getLatitude());
+			
 			if (item.intersects(location)) {
 				return true;
 			}
@@ -141,16 +147,13 @@ public class PlaceViewAdapter extends CursorAdapter {
 			ContentValues values = new ContentValues();
 
 			// TODO - Insert new record into the ContentProvider
-
-
-        
-        
-        
-        
-        
-        
-        
-        
+			values.put(PlaceBadgesContract.COUNTRY_NAME, listItem.getCountryName());
+			values.put(PlaceBadgesContract.FLAG_BITMAP_PATH, listItem.getFlagBitmapPath());
+			values.put(PlaceBadgesContract.PLACE_NAME, listItem.getPlace());
+			values.put(PlaceBadgesContract.LAT, listItem.getLocation().getLatitude());
+			values.put(PlaceBadgesContract.LON, listItem.getLocation().getLongitude());
+			
+			mContext.getContentResolver().insert(PlaceBadgesContract.CONTENT_URI, values);
         
         }
 
@@ -164,7 +167,7 @@ public class PlaceViewAdapter extends CursorAdapter {
 		mPlaceRecords.clear();
 
 		// TODO - delete all records in the ContentProvider
-
+		mContext.getContentResolver().delete(PlaceBadgesContract.BASE_URI, null, null);
         
         
 	}
