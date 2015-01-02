@@ -133,7 +133,7 @@ public class PlaceViewActivity extends ListActivity implements
 		System.out.println("@@@@ PlaceViewActivity onCreate 6");
 
 		// TODO - Initialize the loader
-		//getLoaderManager().initLoader(0, null, this);
+		getLoaderManager().initLoader(0, null, this);
 		
 		System.out.println("@@@@ PlaceViewActivity onCreate 7");
 		
@@ -207,6 +207,7 @@ public class PlaceViewActivity extends ListActivity implements
 		else
 		{
 			// Otherwise - add the PlaceBadge to the adapter
+			System.out.println("#####  Add to cursor adapter");
 			mCursorAdapter.add(place);
 		}
 	}

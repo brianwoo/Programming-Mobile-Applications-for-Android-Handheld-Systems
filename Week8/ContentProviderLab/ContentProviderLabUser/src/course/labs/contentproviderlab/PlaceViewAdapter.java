@@ -63,21 +63,29 @@ public class PlaceViewAdapter extends CursorAdapter {
 		// the current set of PlaceRecords. Use the
 		// getPlaceRecordFromCursor() method as you add the
 		// cursor's places to the list
-		mPlaceRecords.clear();
-		
-		newCursor.moveToFirst();
-		
-		if (newCursor.moveToNext())
+		if (newCursor != null)
 		{
-			PlaceRecord placeRecord = getPlaceRecordFromCursor(newCursor);
-			mPlaceRecords.add(placeRecord);
-		}
-
-        return newCursor;
+            mPlaceRecords.clear();          
+            if (newCursor.moveToFirst())
+            {
+                do 
+                {
+                	mPlaceRecords.add(getPlaceRecordFromCursor(newCursor));
+                	
+                } while (newCursor.moveToNext());
+            }
+            
+            System.out.println("#### before notifyDataSetChanged");
+            notifyDataSetChanged();
+            System.out.println("#### after notifyDataSetChanged");
+        }
         
-
+		return super.swapCursor(newCursor);
+       
 	}
 
+	
+	
 	// Returns a new PlaceRecord for the data at the cursor's
 	// current position
 	private PlaceRecord getPlaceRecordFromCursor(Cursor cursor) {
@@ -124,7 +132,7 @@ public class PlaceViewAdapter extends CursorAdapter {
 		
 		for (PlaceRecord item : mPlaceRecords) {
 			
-			System.out.println("###Array: " + item.getLocation().getLatitude());
+			//System.out.println("###Array: " + item.getLocation().getLatitude());
 			
 			if (item.intersects(location)) {
 				return true;
@@ -167,7 +175,7 @@ public class PlaceViewAdapter extends CursorAdapter {
 		mPlaceRecords.clear();
 
 		// TODO - delete all records in the ContentProvider
-		mContext.getContentResolver().delete(PlaceBadgesContract.BASE_URI, null, null);
+		mContext.getContentResolver().delete(PlaceBadgesContract.CONTENT_URI, null, null);
         
         
 	}
@@ -175,6 +183,8 @@ public class PlaceViewAdapter extends CursorAdapter {
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
 
+		System.out.println("#### calling bindView");
+		
 		ViewHolder holder = (ViewHolder) view.getTag();
 		holder.flag.setImageBitmap(getBitmapFromFile(cursor.getString(cursor
 				.getColumnIndex(PlaceBadgesContract.FLAG_BITMAP_PATH))));
@@ -190,6 +200,9 @@ public class PlaceViewAdapter extends CursorAdapter {
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
+		
+		System.out.println("#### calling newView");
+		
 		View newView;
 		ViewHolder holder = new ViewHolder();
 
