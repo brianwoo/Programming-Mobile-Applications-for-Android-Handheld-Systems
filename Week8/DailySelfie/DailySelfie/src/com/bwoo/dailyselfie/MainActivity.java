@@ -1,0 +1,169 @@
+package com.bwoo.dailyselfie;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
+
+public class MainActivity extends Activity implements ImageInfoReturnCallback
+{
+	static final int REQUEST_IMAGE_CAPTURE = 1;
+	
+	private ListView mListView;
+	private SelfieListAdapter mSelfieAdapter;
+	
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		mSelfieAdapter = new SelfieListAdapter(this, R.layout.row_image);
+		
+		mListView = (ListView) findViewById(R.id.selfie_list);
+		mListView.setAdapter(mSelfieAdapter);
+	}
+
+		
+	
+	@Override
+	protected void onStart()
+	{
+		super.onResume();
+		fetchImagesFromFileSystem();
+	}
+
+
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings)
+		{
+			dispatchTakePictureIntent();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	
+	
+	
+
+
+	private void dispatchTakePictureIntent() 
+	{
+	    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+	    // Ensure that there's a camera activity to handle the intent
+	    if (takePictureIntent.resolveActivity(getPackageManager()) != null) 
+	    {
+	        // Create the File where the photo should go
+	        File photoFile = null;
+	        try 
+	        {
+	            photoFile = createImageFile();
+	        } 
+	        catch (IOException ex) 
+	        {
+	            // Error occurred while creating the File
+	        	Toast toast = Toast.makeText(this, "Unable to create image", Toast.LENGTH_SHORT);
+	        	toast.show();
+	        }
+	        
+	        // Continue only if the File was successfully created
+	        if (photoFile != null) 
+	        {
+	            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+	                    Uri.fromFile(photoFile));
+	            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+	        }
+	    }
+	}
+	
+	
+
+	private File createImageFile() throws IOException 
+	{
+	    // Create an image file name
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    String imageFileName = timeStamp + "_";
+	    File storageDir = Environment.getExternalStoragePublicDirectory(
+	            Environment.DIRECTORY_PICTURES);
+	    File image = File.createTempFile(
+	        imageFileName,  /* prefix */
+	        ".jpg",         /* suffix */
+	        storageDir      /* directory */
+	    );
+
+	    // Save a file: path for use with ACTION_VIEW intents
+	    String mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+	    return image;
+
+	}
+
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) 
+	{
+	    if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) 
+	    {
+	    	fetchImagesFromFileSystem();
+	    }
+	}
+	
+	
+	
+	private void fetchImagesFromFileSystem()
+	{
+    	FetchImagesAsyncTask fetchImagesTask = new FetchImagesAsyncTask(this);
+    	fetchImagesTask.execute(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+	}
+	
+	
+	
+	@Override
+	public void onFinishImageFetch(List<ImageInfo> imageInfoList)
+	{
+		// TODO Auto-generated method stub
+		System.out.println("#### imageInfoList=" + imageInfoList.size());
+		
+		mSelfieAdapter.clear();
+		
+		// add the new list of images to adapter, then trigger the notification
+		for (ImageInfo imageInfo : imageInfoList)
+		{
+			mSelfieAdapter.add(imageInfo);
+		}
+		
+		mSelfieAdapter.notifyDataSetChanged();
+		
+	}
+	
+	
+}
