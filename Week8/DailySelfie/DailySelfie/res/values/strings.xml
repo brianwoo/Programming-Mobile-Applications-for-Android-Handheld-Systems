@@ -4,5 +4,7 @@
     <string name="app_name">DailySelfie</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="show_image_desc">image</string>
 
 </resources>

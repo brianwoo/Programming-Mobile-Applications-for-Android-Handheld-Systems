@@ -4,6 +4,7 @@
 package com.bwoo.dailyselfie;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -58,6 +59,8 @@ public class SelfieListAdapter extends ArrayAdapter<ImageInfo>
 		ImageInfo imageInfo = getItem(position);
 		vHolder.iconView.setImageBitmap(imageInfo.getThumbnail());
 		vHolder.filenameView.setText(imageInfo.getFileName());
+		vHolder.filename = imageInfo.getFileName();
+		
 		
 		return convertView;
 	}
@@ -65,10 +68,36 @@ public class SelfieListAdapter extends ArrayAdapter<ImageInfo>
 	
 	
 	
-	class ViewHolder
+	public class ViewHolder
 	{
 		private ImageView iconView;
 		private TextView filenameView; 
+		private String filename;
+		
+		
+		public String getFilename()
+		{
+			return filename;
+		}
+		
+	}
+	
+	
+	
+	private String getShortenedFileName(String originalFilename)
+	{
+		StringTokenizer tokenizer = new StringTokenizer(originalFilename, "_");
+		
+		String yearDateString = "";
+		String timeString = "";
+		
+		if (tokenizer.hasMoreElements())
+			yearDateString = tokenizer.nextToken();
+		
+		if (tokenizer.hasMoreElements())
+			timeString = tokenizer.nextToken();
+		
+		return yearDateString + "_" + timeString;
 	}
 	
 }

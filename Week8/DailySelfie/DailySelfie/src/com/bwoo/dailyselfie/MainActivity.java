@@ -6,20 +6,29 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.bwoo.dailyselfie.SelfieListAdapter.ViewHolder;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements ImageInfoReturnCallback
 {
+	protected static final String IMAGE_NAME = "imageName";
 	static final int REQUEST_IMAGE_CAPTURE = 1;
+	static final String TAG = MainActivity.class.getName();
+	
 	
 	private ListView mListView;
 	private SelfieListAdapter mSelfieAdapter;
@@ -35,6 +44,25 @@ public class MainActivity extends Activity implements ImageInfoReturnCallback
 		
 		mListView = (ListView) findViewById(R.id.selfie_list);
 		mListView.setAdapter(mSelfieAdapter);
+		
+		mListView.setOnItemClickListener(new OnItemClickListener()
+		{
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id)
+			{
+				Log.i(TAG, "### item clicked!");
+				
+				ViewHolder vHolder = (ViewHolder) view.getTag();
+				String filename = vHolder.getFilename();
+				
+				Intent intent = new Intent(getApplicationContext(), ImageActivity.class);
+				intent.putExtra(IMAGE_NAME, filename);
+				startActivity(intent);
+			}
+		});
+		
 	}
 
 		
