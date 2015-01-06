@@ -3,6 +3,8 @@
  */
 package com.bwoo.dailyselfie;
 
+import java.util.Calendar;
+
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -20,22 +22,54 @@ import android.os.SystemClock;
 public class SelfieAlarmBroadcastReceiver extends BroadcastReceiver
 {
 	
+	
+	
 	// Notification ID to allow for future updates
 	private static final int MY_NOTIFICATION_ID = 1;
 	
+	/**
+	 * Setup the alarm
+	 * 
+	 * @param context
+	 */
 	public void setupAlarm(Context context)
 	{
 		
 		AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent(context, SelfieAlarmBroadcastReceiver.class);
-		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+		PendingIntent alarmIntent = getAlarmIntent(context);
 
 		alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-				60 * 1000,
+				SystemClock.elapsedRealtime() + (60 * 1000),
 				60 * 1000, 
 				alarmIntent);
 	}
 
+	
+	/**
+	 * Cancel the alarm
+	 * 
+	 * @param context
+	 */
+	public void cancelAlarm(Context context)
+	{
+		AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		PendingIntent alarmIntent = getAlarmIntent(context);
+		
+		alarmMgr.cancel(alarmIntent);
+	}
+	
+	
+	
+	private PendingIntent getAlarmIntent(Context context)
+	{
+		Intent intent = new Intent(context, SelfieAlarmBroadcastReceiver.class);
+		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+		
+		return alarmIntent;
+	}
+	
+	//public void cancelAlarm()
+	
 
 	@Override
 	public void onReceive(Context context, Intent intent)

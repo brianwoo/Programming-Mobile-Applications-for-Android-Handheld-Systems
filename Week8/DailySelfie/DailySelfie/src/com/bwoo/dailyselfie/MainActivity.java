@@ -63,10 +63,6 @@ public class MainActivity extends Activity implements ImageInfoReturnCallback
 			}
 		});
 		
-		// setup repeating alarm
-		SelfieAlarmBroadcastReceiver selfieAlarm = new SelfieAlarmBroadcastReceiver();
-		selfieAlarm.setupAlarm(this);
-		
 	}
 
 		
@@ -78,6 +74,31 @@ public class MainActivity extends Activity implements ImageInfoReturnCallback
 		fetchImagesFromFileSystem();
 	}
 
+
+
+
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		
+		// Cancel the alarm when we are in the app.
+		SelfieAlarmBroadcastReceiver selfieAlarm = new SelfieAlarmBroadcastReceiver();
+		selfieAlarm.cancelAlarm(this);
+	}
+
+
+
+	@Override
+	protected void onStop()
+	{
+		// TODO Auto-generated method stub
+		super.onStop();
+		
+		// setup repeating alarm while the app is stopped.
+		SelfieAlarmBroadcastReceiver selfieAlarm = new SelfieAlarmBroadcastReceiver();
+		selfieAlarm.setupAlarm(this);
+	}
 
 
 
