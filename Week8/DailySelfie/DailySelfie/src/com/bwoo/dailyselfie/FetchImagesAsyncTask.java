@@ -4,16 +4,13 @@
 package com.bwoo.dailyselfie;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bwoo.dailyselfie.utils.BitmapBuilder;
+
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -61,37 +58,14 @@ public class FetchImagesAsyncTask extends AsyncTask<File, Integer, List<ImageInf
 	    
 	    for (File imageFile : imageFiles)
 	    {
-
-	    	FileInputStream fis = null;
 	    	
 	    	try
 			{
-				fis = new FileInputStream(imageFile);
-		    	
-				BitmapFactory.Options options = new BitmapFactory.Options();
-		    	options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-				//options.inJustDecodeBounds = true;
-		    	Bitmap bitmap = BitmapFactory.decodeStream(fis, null, options);
-		    	//int photoW = options.outWidth;
-		    	//int photoH = options.outHeight;
-		    	
-		    	
-		    	// Determine how much to scale down the image
-		        //int scaleFactor = Math.min(photoW/THUMBNAIL_SIZE, photoH/THUMBNAIL_SIZE);
-
-		        // Decode the image file into a Bitmap sized to fill the View
-		        //options.inJustDecodeBounds = false;
-		        //options.inSampleSize = scaleFactor;
-		        //options.inPurgeable = true;
-
-		        //Bitmap thumbnailBitmap = BitmapFactory.decodeStream(fis, null, options);
-		        
-		        
-		    	
-			    //System.out.println("#### imageFile exists? = " + imageFile.exists());
-			    //System.out.println("imageFile abs path = " + bitmap);
+	    		BitmapBuilder bitmapBuilder = new BitmapBuilder();
+	    		Bitmap bitmap = bitmapBuilder.getBitmapFromFile(imageFile);
 			    
-	            Bitmap thumbnailBitmap = Bitmap.createScaledBitmap(bitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false);
+	            Bitmap thumbnailBitmap = 
+	            		Bitmap.createScaledBitmap(bitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false);
 
 	            ImageInfo imageInfo = new ImageInfo();
 	            imageInfo.setThumbnail(thumbnailBitmap);
@@ -104,19 +78,7 @@ public class FetchImagesAsyncTask extends AsyncTask<File, Integer, List<ImageInf
 			{
 				Log.e(TAG, "BAD image file: " + imageFile.getName());
 			}
-	    	finally
-	    	{
-				try
-				{
-		    		if (fis != null)
-		    			fis.close();
-				}
-				catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	    	}
+
 	    }
 		
 		return imageInfoList;

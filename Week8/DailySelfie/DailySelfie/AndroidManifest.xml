@@ -33,6 +33,8 @@
             android:name="com.bwoo.dailyselfie.ImageActivity"
             android:label="@string/title_activity_image" >
         </activity>
+        <receiver android:name='com.bwoo.dailyselfie.SelfieAlarmBroadcastReceiver'>
+        </receiver>
     </application>
 
 </manifest>

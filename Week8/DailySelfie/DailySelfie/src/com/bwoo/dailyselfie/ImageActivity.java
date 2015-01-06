@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import com.bwoo.dailyselfie.utils.BitmapBuilder;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.os.Build;
 
 public class ImageActivity extends Activity
@@ -114,43 +117,25 @@ public class ImageActivity extends Activity
 			
 			String imageName = getActivity().getIntent().getStringExtra(MainActivity.IMAGE_NAME);
 			
-			File picsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+			File picsDir = 
+					Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			String picsDirPath = picsDir.getAbsolutePath();
 			
-			String imageFile = picsDirPath + "/" + imageName;
+			String imageFile = picsDirPath + "/" + imageName;			
 			
-			FileInputStream fis = null;
 			try
 			{
-				fis = new FileInputStream(imageFile);
-				
-				BitmapFactory.Options options = new BitmapFactory.Options();
-		    	options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-				//options.inJustDecodeBounds = true;
-		    	Bitmap bitmap = BitmapFactory.decodeStream(fis, null, options);
+				BitmapBuilder bitmapBuilder = new BitmapBuilder();
+				Bitmap bitmap = bitmapBuilder.getBitmapFromFile(imageFile);
 				
 				mShowImageView.setImageBitmap(bitmap);
 			}
-			catch (FileNotFoundException e)
+			catch (IOException e1)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Toast toast = Toast.makeText(getActivity(), 
+						"Unable to open bitmap file", Toast.LENGTH_SHORT);
+				toast.show();
 			}
-			finally
-			{
-
-				try
-				{
-					if (fis != null)
-						fis.close();
-				}
-				catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
 		}
 
 		

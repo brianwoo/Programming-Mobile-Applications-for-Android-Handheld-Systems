@@ -3,14 +3,12 @@
  */
 package com.bwoo.dailyselfie;
 
-import java.util.List;
 import java.util.StringTokenizer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,7 +56,10 @@ public class SelfieListAdapter extends ArrayAdapter<ImageInfo>
 		
 		ImageInfo imageInfo = getItem(position);
 		vHolder.iconView.setImageBitmap(imageInfo.getThumbnail());
-		vHolder.filenameView.setText(imageInfo.getFileName());
+		
+		String shortenedFileName = getShortenedFileName(imageInfo.getFileName());
+		vHolder.filenameView.setText(shortenedFileName);
+		
 		vHolder.filename = imageInfo.getFileName();
 		
 		

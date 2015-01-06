@@ -63,6 +63,10 @@ public class MainActivity extends Activity implements ImageInfoReturnCallback
 			}
 		});
 		
+		// setup repeating alarm
+		SelfieAlarmBroadcastReceiver selfieAlarm = new SelfieAlarmBroadcastReceiver();
+		selfieAlarm.setupAlarm(this);
+		
 	}
 
 		
