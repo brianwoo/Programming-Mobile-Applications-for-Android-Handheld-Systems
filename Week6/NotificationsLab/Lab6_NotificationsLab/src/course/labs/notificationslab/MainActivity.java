@@ -101,12 +101,17 @@ public class MainActivity extends Activity implements SelectionListener,
 				@Override
 				public void onReceive(Context context, Intent intent) {
 
+					System.out.println("BroadcastReceiver onReceive");
+					
+					
 					// TODO:
 					// Check to make sure this is an ordered broadcast
 					// Let sender know that the Intent was received
 					// by setting result code to MainActivity.IS_ALIVE
 					if (isOrderedBroadcast())
 					{
+						System.out.println("BroadcastReceiver onReceive isOrderedBroadcast");
+						
 						setResultCode(MainActivity.IS_ALIVE);
 					}
 					

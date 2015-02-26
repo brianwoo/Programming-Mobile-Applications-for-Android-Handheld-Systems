@@ -94,6 +94,15 @@ public class DownloaderTaskFragment extends Fragment {
 		
 
 		@Override
+		protected void onPostExecute(String[] result) 
+		{
+			super.onPostExecute(result);
+			if (mCallback != null)
+				mCallback.notifyDataRefreshed(result);
+		}
+
+
+		@Override
 		protected String[] doInBackground(Integer[]... params)
 		{
 			String[] tweets = downloadTweets(params[0]);
@@ -188,6 +197,8 @@ public class DownloaderTaskFragment extends Fragment {
 						@Override
 						public void onReceive(Context context, Intent intent) {
 
+							System.out.println("DownloaderFragment BroadcastReceiver onReceive");
+							
 							// TODO: Check whether or not the MainActivity
 							// received the broadcast
 							int resultCode = getResultCode();
@@ -215,10 +226,8 @@ public class DownloaderTaskFragment extends Fragment {
 
 								// TODO: Set the notification View's text to
 								// reflect whether the download completed
-								// successfully
-								mContentView.setTextViewText(R.id.text, 
-										getString(R.string.download_succes_string));
-
+								// successfully								
+								mContentView.setTextViewText(R.id.text, successMsg);
 
 
 								// TODO: Use the Notification.Builder class to
@@ -248,6 +257,7 @@ public class DownloaderTaskFragment extends Fragment {
 								Toast.makeText(mContext,
 										success ? successMsg : failMsg,
 										Toast.LENGTH_LONG).show();
+								
 							}
 						}
 					}, null, 0, null, null);
